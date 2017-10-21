@@ -1,0 +1,15 @@
+h1 {
+    font-size: 50px;
+    font-family: Helvetica, sans-serif;
+}
+.column {
+    float: left;
+    margin: 2%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

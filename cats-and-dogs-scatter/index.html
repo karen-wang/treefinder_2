@@ -1,0 +1,174 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>😸 vs. 🐶 stats</title>
+    <style>
+      h1 {
+        font-size: 50px;
+        font-family: Helvetica, sans-serif;
+      }
+      button#cats-only {
+        background-color: steelblue;
+      }
+      button#dogs-only {
+        background-color: salmon;
+      }
+      button#both {
+        background-color: grey;
+      }
+    </style>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+  </head>
+  <body>
+    <section>
+      <h1>Height vs. Weight for Cats &amp; Dogs</h1>
+      <span> Fancy filters: </span>
+      <button id="cats-only" data-filter="cat">Cats Only</button>
+      <button id="dogs-only" data-filter="dog">Dogs Only</button>
+      <button id="both" data-filter="both">Both</button>
+    </section>
+    <svg id="animal-viz"></svg>
+    <script>
+      // Select the `<svg id="animal-viz"></svg>` DOM node
+      let wholeChart = d3.select('#animal-viz');
+
+      // Set size of the plot and spacing around it (for axes!)
+      let plotWidth = 500;
+      let plotHeight = 500;
+      let plotMargin = 50;
+      let outerWidth = plotWidth + 2 * plotMargin;
+      let outerHeight = plotHeight + 2 * plotMargin;
+
+      // Set the size of the whole chart
+      // We could have done this in CSS too,
+      // since it's not dependent on our data
+      wholeChart
+        .attr('width', outerWidth)
+        .attr('height', outerHeight);
+
+      // Append a `g` element to our SVG: we'll work in this for our plot
+      // It has margins
+      let plot = wholeChart.append('g')
+        .attr('transform', `translate(${plotMargin},${plotMargin})`);
+
+      // Create our scales,
+      // each of which will map data from 0-10 to the size of our plot
+      let xScale = d3.scaleLinear()
+        .domain([0, 10])
+        .range([0, plotWidth]);
+      let yScale = d3.scaleLinear()
+        .domain([0, 10])
+        .range([plotHeight, 0]); // SVG has its origin in the top left, so we need to invert!
+
+      // xScale and yScale are functions:
+      // xScale(0) => 0; xScale(10) => 500; xScale(2) => 100
+      // yScale(0) => 500; yScale(10) => 0; yScale(2) => 400
+
+      // Draw our axes based on xScale and yScale
+      let xAxis = plot.append('g')
+        .attr('transform', `translate(0,${plotHeight})`)
+        .call(d3.axisBottom(xScale));
+      let yAxis = plot.append('g')
+        .call(d3.axisLeft(yScale));
+
+      // Label the x axis, halfway along the width of the plot, 35 px under it
+      let xAxisLabel = plot.append('text')
+        .attr('x', plotWidth / 2)
+        .attr('y', plotHeight + 35)
+        .style('text-anchor', 'middle')
+        .text('Weight');
+
+      // Label the y axis,
+      let yAxisLabel = plot.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', -35) // Actually moving left, since we rotated
+        .attr('x', - (plotHeight / 2)) // Move vertically down halfway
+        .style('text-anchor', 'middle')
+        .text('Height');
+
+      // Fetch the data, transfrom it, load it
+      d3.csv('animals.csv', parseInputRow, loadData);
+
+      // Convert weight and height from strings to numbers
+      function parseInputRow (d) {
+        return {
+          id: +d.id,
+          animal: d.animal,
+          weight: +d.weight,
+          height: +d.height,
+          name: d.name
+        };
+      }
+
+      function loadData (error, animalData) {
+        if (error) throw error; // Runs if there's a problem fetching the csv.
+
+        // animalData looks like
+        // [
+        //   {animal: "cat", weight: 10, height: 3},
+        //   {animal: "cat", weight: 3, height: 3},
+        //   ...
+        // ]
+
+        // Draw the initial scatter plot
+        drawScatterPlot(animalData);
+
+        // Set up event handlers for our buttons.
+        // You could also do this with plain JavaScript!
+        // e.g. document.querySelectorAll('button') ... addEventListener ...
+        // D3 just provides convenient methods for operating on DOM nodes
+        // through its selections
+        let buttons = d3.selectAll('button');
+        buttons.on('click', function() {
+          // When you write a function for a D3 selection with multiple nodes
+          // `this` refers to the current DOM node
+          let chosenAnimal = this.dataset.filter; // value of `data-filter` attr
+          let filteredData;
+          if (chosenAnimal === 'both') {
+            filteredData = animalData;
+          } else {
+            filteredData = animalData.filter( d => d.animal === chosenAnimal );
+          }
+          drawScatterPlot(filteredData);
+        });
+      }
+
+      function drawScatterPlot(animalData) {
+        // Create a selection of circles in our plot (empty on the first go)
+        let circles = plot.selectAll('circle');
+
+        // Bind our animal data to the circles, using the "id" field as our key
+        let updatedCircles = circles.data(animalData, d => d.id);
+
+        // Could also set the key to "name"!
+        // The key for each datapoint can be anything, ideally a unique feature of each datum.
+        // If we already have circles that have data joined, D3 will compare the keys
+        // of each of those with the keys of the joined data to see:
+        // * Does our dataset have datums that aren't already represented by nodes? (we can `enter` these)
+        // * Are there nodes which no longer have corresponding datums in the dataset? (we can `exit` these)
+        // * Are there nodes whose keys match the keys of the dataset? (these are the `update` selection)
+        // By default, D3 uses the index in the data array, in our example that won't work.
+
+        // We'll use "enter" to make circles for new datapoints
+        // From https://github.com/d3/d3-selection#selection_enter :
+        // "The enter selection is typically used to create 'missing' elements corresponding to new data."
+        // "[The selection comprises] placeholder nodes for each datum that had no corresponding DOM element in the selection."
+        // "Conceptually, the enter selection’s placeholders are pointers to the parent element"
+        let enterSelection = updatedCircles.enter();
+        let newCircles = enterSelection.append('circle')
+          .attr('r', 20)
+          .attr('cx', function (d) { return xScale(d.weight); })
+          .attr('cy', function (d) { return yScale(d.height); })
+          .style('fill', function(d) {
+            return d.animal === 'cat' ? 'steelblue' : 'salmon';
+          });
+
+        // Now we'll select all the circles that no longer
+        // have any corresponding data after the data join
+        let unselectedCircles = updatedCircles.exit();
+        // And we'll remove those nodes form the DOM - poof!
+        updatedCircles.exit().remove();
+      }
+    </script>
+  </body>
+</html>
