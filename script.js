@@ -2,7 +2,7 @@
 // Set up size
 let mapWidth = 750;
 let mapHeight = 750;
-
+console.log('hello world');
 // Set up projection that the map is using
 let projection = d3.geoMercator()
     .center([-122.433701, 37.767683]) // San Francisco, roughly
@@ -87,22 +87,35 @@ function parseInputRow(d) {
     return {
         id: +d.TreeID,
         species: d.qSpecies.toLowerCase(),
-        // diameter: +d.DBH,
+        diameter: +d.DBH,
         lon: d.Longitude,
         lat: d.Latitude
     };
 }
 
+function multifilterData(treeData) {
+    const minDiameter = document.getElementById('diameter-slider').value;
+    const speciesQuery = document.getElementById('species').value;
+    return treeData
+    .filter(d => d.diameter > minDiameter)
+    .filter(d => d.species.includes(speciesQuery));
+}
+
 function loadTreeData(error, treeData) {
     if (error) throw error; // Runs if there's a problem fetching the csv.
+
+    document.getElementById('diameter-slider').addEventListener("input", function() {
+        filterDiameter();
+        let filteredData = multifilterData(treeData);
+        drawTreeScatterPlot(filteredData);
+    });
+    filterDiameter();
+
     drawTreeScatterPlot(treeData);
 
-    let speciesInput = d3.select('#species');
+    const speciesInput = d3.select('#species');
     speciesInput.on('keyup', function() {
-        d3.select("#species").html(this.value);
-        let searchText = this.textContent.toLowerCase();
-        let filteredData;
-        filteredData = treeData.filter( d => d.species.includes(searchText));
+        let filteredData = multifilterData(treeData);
         drawTreeScatterPlot(filteredData);
     });
 
@@ -129,7 +142,7 @@ function redrawPoint(circleObj, textObj, coords) {
 }
 
 function drawTreeScatterPlot(treeData) {
-    //console.log(treeData);
+    console.log('drawTreeScatterPlot');
     // Create a selection of circles in our plot (empty on the first go)
     let circles = plot.selectAll('circle');
 
@@ -153,7 +166,7 @@ function drawTreeScatterPlot(treeData) {
     let enterSelection = updatedCircles.enter();
 
     let newCircles = enterSelection.append('circle')
-        .attr('r', 2)
+        .attr('r', 3)
         .attr('cx', function (d) {
             let projectedLoc = projection([d.lon, d.lat]);
             //console.log(projectedLoc);
@@ -172,4 +185,12 @@ function drawTreeScatterPlot(treeData) {
     let unselectedCircles = updatedCircles.exit();
     // And we'll remove those nodes form the DOM - poof!
     updatedCircles.exit().remove();
+}
+
+function filterDiameter() {
+    const diameter = document.getElementById('diameter-slider').value;
+    document.getElementById('diameter-text').innerHTML = diameter;
+    //d3.selectAll('circle')
+    //    .attr('r', radius);
+    
 }
