@@ -17,6 +17,8 @@ let projection = d3.geoMercator()
 // Select the `<svg id="animal-viz"></svg>` DOM node
 let wholeChart = d3.select('#map-viz');
 
+console.log('wee');
+
 let plotMargin = 50;
 
 // Set the size of the whole chart
@@ -41,6 +43,45 @@ let plot = wholeChart.append('g')
 // [KYW] I filtered out all rows with no latitude or longitude in Excel
 d3.csv('trees_filter_latlong.csv', parseInputRow, loadTreeData);
 
+var circleA = d3.select('#circleA')
+    .attr('r', 3)
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .style('fill', 'black')
+    .style('visibility', 'hidden');
+
+var radiusA = d3.select('#radiusA')
+    .attr('r', 0)
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .style('fill', 'black')
+    .style('opacity', 0.1)
+    .style('visibility', 'hidden');
+
+var textA = d3.select('#textA')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('text-anchor', 'start')
+    .style('fill', 'red')
+    .style('font-family', 'sans-serif')
+    .style('visibility', 'hidden');
+
+var coordsA = null;
+
+var sliderA = document.getElementById('sliderA');
+sliderA.addEventListener("input", function() {
+    let newRadius = this.value;
+    if (coordsA) {
+        radiusA.attr('r', newRadius)
+            .attr('cx', coordsA[0])
+            .attr('cy', coordsA[1])
+            .style('visibility', 'visible');
+    }
+}, false);
+
+let circle = d3.geoCircle();
+circle.center([-138.2836697, 47.26998737]).radius();
+
 // Convert weight and height from strings to numbers
 function parseInputRow(d) {
     return {
@@ -64,6 +105,27 @@ function loadTreeData(error, treeData) {
         filteredData = treeData.filter( d => d.species.includes(searchText));
         drawTreeScatterPlot(filteredData);
     });
+
+    let wholeChart = d3.select('#map-viz');
+    wholeChart.on("click", function() {
+        //console.log(d3.mouse(this));
+        coordsA = d3.mouse(this);
+        redrawPoint(circleA, textA, coordsA);
+    });
+
+}
+
+function redrawPoint(circleObj, textObj, coords) {
+    circleObj.attr('cx', coords[0])
+        .attr('cy', coords[1])
+        .style('visibility', 'visible');
+    textObj.attr('x', coords[0])
+        .attr('y', coords[1])
+        .style('visibility', 'visible');
+    radiusA.attr('r', sliderA.value)
+        .attr('cx', coordsA[0])
+        .attr('cy', coordsA[1])
+        .style('visibility', 'visible');
 }
 
 function drawTreeScatterPlot(treeData) {

@@ -11,12 +11,16 @@
     </section>
     <div class="row">
       <div class="column">
-        <svg id="map-viz"></svg>
+        <svg id="map-viz">
+          <circle id="circleA"></circle>
+          <circle id="radiusA"></circle>
+          <text id="textA">A</text>
+        </svg>
       </div>
       <div class="column">
         <div class="row">
-          <label for="radiusA">Radius A</label>
-          <input type="range" min="1" max="100" value="50" class="slider" id="radiusA">
+          <label for="sliderA">Radius A</label>
+          <input type="range" min="1" max="1000" value="50" class="slider" id="sliderA">
         </div>
         <div class="row">
           <label for="radiusB">Radius B</label>
