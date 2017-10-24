@@ -23,8 +23,10 @@
           <input type="range" min="1" max="100" value="50" class="slider" id="radiusB">
         </div>
         <div class="row">
-          <label for="treeDiam">Tree Diameter</label>
-          <input type="range" min="1" max="100" value="50" class="slider" id="treeDiam">
+          <label for="treeDiam">Only include trees with diameter greater than
+            <text id="diameter-text" style="margin-right:10px">&nbsp;</text>
+          </label>
+          <input type="range" min="0" max="100" value="0" class="slider" id="diameter-slider" >
         </div>
         <div class="row">
           <label for="species">Species</label>
