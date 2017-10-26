@@ -60,8 +60,9 @@ function multifilterData(treeData) {
     const speciesQuery = document.getElementById('species').value;
 
     //const circleA = d3.select('#circleA');
-    const inCircleData = filterInCircle(treeData, pointA);
-    return inCircleData
+    const inAData = filterInCircle(treeData, pointA);
+    const inABData = filterInCircle(inAData, pointB);
+    return inABData
     .filter(d => d.diameter > minDiameter)
     .filter(d => d.species.includes(speciesQuery));
 }
@@ -107,8 +108,7 @@ function loadTreeData(error, treeData) {
         if (pointA) {
             let newRadius = this.value;
             pointA.radius.attr('r', newRadius);
-             //   .attr('cx', pointA.coords[0])
-              //  .attr('cy', pointA.coords[1]);
+             
             let filteredData = multifilterData(treeData);
             drawTreeScatterPlot(filteredData);
         }
@@ -118,9 +118,9 @@ function loadTreeData(error, treeData) {
     sliderB.addEventListener("input", function() {
         if (pointB) {
             let newRadius = this.value;
-            pointB.radius.attr('r', newRadius)
-                .attr('cx', pointB.coords[0])
-                .attr('cy', pointB.coords[1]);
+            pointB.radius.attr('r', newRadius);
+            let filteredData = multifilterData(treeData);
+            drawTreeScatterPlot(filteredData);
         }
     }, false);
 
