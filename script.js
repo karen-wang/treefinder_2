@@ -2,7 +2,6 @@
 // Set up size
 let mapWidth = 750;
 let mapHeight = 750;
-console.log('hello world');
 // Set up projection that the map is using
 let projection = d3.geoMercator()
     .center([-122.433701, 37.767683]) // San Francisco, roughly
@@ -17,9 +16,8 @@ let projection = d3.geoMercator()
 // Select the `<svg id="animal-viz"></svg>` DOM node
 let wholeChart = d3.select('#map-viz');
 
-console.log('wee');
 
-let plotMargin = 50;
+let plotMargin = 0;
 
 // Set the size of the whole chart
 // We could have done this in CSS too,
@@ -96,9 +94,12 @@ function parseInputRow(d) {
 function multifilterData(treeData) {
     const minDiameter = document.getElementById('diameter-slider').value;
     const speciesQuery = document.getElementById('species').value;
-    return treeData
+    const circleA = d3.select('#circleA');
+    const inCircleData = filterInCircle(treeData, circleA);
+    return inCircleData
     .filter(d => d.diameter > minDiameter)
-    .filter(d => d.species.includes(speciesQuery));
+    .filter(d => d.species.includes(speciesQuery))
+    ;
 }
 
 function loadTreeData(error, treeData) {
@@ -111,6 +112,12 @@ function loadTreeData(error, treeData) {
     });
     filterDiameter();
 
+    const sliderA = d3.select('#sliderA');
+    sliderA.on('input', function() {
+        let filteredData = multifilterData(treeData);
+        drawTreeScatterPlot(filteredData);
+    });
+
     drawTreeScatterPlot(treeData);
 
     const speciesInput = d3.select('#species');
@@ -120,12 +127,26 @@ function loadTreeData(error, treeData) {
     });
 
     let wholeChart = d3.select('#map-viz');
-    wholeChart.on("click", function() {
-        //console.log(d3.mouse(this));
+    wholeChart.on('click', function() {
         coordsA = d3.mouse(this);
         redrawPoint(circleA, textA, coordsA);
+        let filteredData = multifilterData(treeData);
+        drawTreeScatterPlot(filteredData);
     });
 
+}
+
+function filterInCircle(data, circle) {
+    let whichSlider = (circle.attr('id') === 'circleA') ? 'sliderA' : 'sliderB';
+    let circleCoords = [circle.attr("cx"), circle.attr("cy")];
+    let radius = document.getElementById(whichSlider).value;
+    return data.filter(function(d) {
+        const dataCoords = projection([d.lon, d.lat]);
+        if (radius >= distance(dataCoords, circleCoords)) {
+            return true;
+        }
+        return false;
+    });
 }
 
 function redrawPoint(circleObj, textObj, coords) {
@@ -139,10 +160,10 @@ function redrawPoint(circleObj, textObj, coords) {
         .attr('cx', coordsA[0])
         .attr('cy', coordsA[1])
         .style('visibility', 'visible');
+
 }
 
 function drawTreeScatterPlot(treeData) {
-    console.log('drawTreeScatterPlot');
     // Create a selection of circles in our plot (empty on the first go)
     let circles = plot.selectAll('circle');
 
@@ -185,6 +206,10 @@ function drawTreeScatterPlot(treeData) {
     let unselectedCircles = updatedCircles.exit();
     // And we'll remove those nodes form the DOM - poof!
     updatedCircles.exit().remove();
+}
+
+function distance(A, B) {
+    return Math.sqrt(Math.pow(A[0]- B[0], 2) + Math.pow(A[1] - B[1], 2));
 }
 
 function filterDiameter() {
