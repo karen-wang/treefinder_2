@@ -41,44 +41,8 @@ let plot = wholeChart.append('g')
 // [KYW] I filtered out all rows with no latitude or longitude in Excel
 d3.csv('trees_filter_latlong.csv', parseInputRow, loadTreeData);
 
-var circleA = d3.select('#circleA')
-    .attr('r', 3)
-    .attr('cx', 0)
-    .attr('cy', 0)
-    .style('fill', 'black')
-    .style('visibility', 'hidden');
-
-var radiusA = d3.select('#radiusA')
-    .attr('r', 0)
-    .attr('cx', 0)
-    .attr('cy', 0)
-    .style('fill', 'black')
-    .style('opacity', 0.1)
-    .style('visibility', 'hidden');
-
-var textA = d3.select('#textA')
-    .attr('x', 0)
-    .attr('y', 0)
-    .attr('text-anchor', 'start')
-    .style('fill', 'red')
-    .style('font-family', 'sans-serif')
-    .style('visibility', 'hidden');
-
-var coordsA = null;
-
-var sliderA = document.getElementById('sliderA');
-sliderA.addEventListener("input", function() {
-    let newRadius = this.value;
-    if (coordsA) {
-        radiusA.attr('r', newRadius)
-            .attr('cx', coordsA[0])
-            .attr('cy', coordsA[1])
-            .style('visibility', 'visible');
-    }
-}, false);
-
-let circle = d3.geoCircle();
-circle.center([-138.2836697, 47.26998737]).radius();
+// let circle = d3.geoCircle();
+// circle.center([-138.2836697, 47.26998737]).radius();
 
 // Convert weight and height from strings to numbers
 function parseInputRow(d) {
@@ -94,12 +58,12 @@ function parseInputRow(d) {
 function multifilterData(treeData) {
     const minDiameter = document.getElementById('diameter-slider').value;
     const speciesQuery = document.getElementById('species').value;
-    const circleA = d3.select('#circleA');
-    const inCircleData = filterInCircle(treeData, circleA);
+
+    //const circleA = d3.select('#circleA');
+    const inCircleData = filterInCircle(treeData, pointA);
     return inCircleData
     .filter(d => d.diameter > minDiameter)
-    .filter(d => d.species.includes(speciesQuery))
-    ;
+    .filter(d => d.species.includes(speciesQuery));
 }
 
 function loadTreeData(error, treeData) {
@@ -112,11 +76,11 @@ function loadTreeData(error, treeData) {
     });
     filterDiameter();
 
-    const sliderA = d3.select('#sliderA');
-    sliderA.on('input', function() {
-        let filteredData = multifilterData(treeData);
-        drawTreeScatterPlot(filteredData);
-    });
+    // const sliderA = d3.select('#sliderA');
+    // sliderA.on('input', function() {
+    //     let filteredData = multifilterData(treeData);
+    //     drawTreeScatterPlot(filteredData);
+    // });
 
     drawTreeScatterPlot(treeData);
 
@@ -126,19 +90,96 @@ function loadTreeData(error, treeData) {
         drawTreeScatterPlot(filteredData);
     });
 
-    let wholeChart = d3.select('#map-viz');
-    wholeChart.on('click', function() {
-        coordsA = d3.mouse(this);
-        redrawPoint(circleA, textA, coordsA);
-        let filteredData = multifilterData(treeData);
-        drawTreeScatterPlot(filteredData);
+    wholeChart.on("click", function() {
+        if (pointA.coords == null) {
+            pointA.coords = d3.mouse(this);
+            redrawPoint(pointA, sliderA);
+            let filteredData = multifilterData(treeData);
+            drawTreeScatterPlot(filteredData);
+        } else if (pointB.coords == null) {
+            pointB.coords = d3.mouse(this);
+            redrawPoint(pointB, sliderB);
+        }
     });
 
+    var sliderA = document.getElementById('sliderA');
+    sliderA.addEventListener("input", function() {
+        if (pointA) {
+            let newRadius = this.value;
+            pointA.radius.attr('r', newRadius);
+             //   .attr('cx', pointA.coords[0])
+              //  .attr('cy', pointA.coords[1]);
+            let filteredData = multifilterData(treeData);
+            drawTreeScatterPlot(filteredData);
+        }
+    }, false);
+
+    var sliderB = document.getElementById('sliderB');
+    sliderB.addEventListener("input", function() {
+        if (pointB) {
+            let newRadius = this.value;
+            pointB.radius.attr('r', newRadius)
+                .attr('cx', pointB.coords[0])
+                .attr('cy', pointB.coords[1]);
+        }
+    }, false);
+
+    pointA = {};
+    pointA.id = 'A';
+    pointA.center = wholeChart.append('circle');
+    pointA.radius = wholeChart.append('circle');
+    pointA.text = wholeChart.append('text');
+    resetPoint(pointA);
+
+    pointB = {};
+    pointB.id = 'B';
+    pointB.center = wholeChart.append('circle');
+    pointB.radius = wholeChart.append('circle');
+    pointB.text = wholeChart.append('text');
+    resetPoint(pointB);
 }
 
-function filterInCircle(data, circle) {
-    let whichSlider = (circle.attr('id') === 'circleA') ? 'sliderA' : 'sliderB';
-    let circleCoords = [circle.attr("cx"), circle.attr("cy")];
+// var pointA;
+// var radiusA;
+// var textA;
+// var coordsA;
+//
+// var pointB;
+// var radiusB;
+// var textB;
+// var coordsB;
+
+var pointA;
+var pointB;
+
+
+
+function resetPoint(point) {
+    point.coords = null;
+    point.center.attr('r', 3)
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .style('fill', 'black')
+        .style('visibility', 'hidden');
+    point.radius.attr('r', 0)
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .style('fill', 'black')
+        .style('opacity', 0.1)
+        .style('visibility', 'hidden');
+    point.text.attr('x', 0)
+        .attr('y', 0)
+        .attr('text-anchor', 'start')
+        .text(point.id)
+        .style('fill', 'red')
+        .style('font-family', 'sans-serif')
+        .style('visibility', 'hidden');
+}
+
+
+function filterInCircle(data, point) {
+    let whichSlider = (point.id === 'A') ? 'sliderA' : 'sliderB';
+    let circleCoords = [point.center.attr("cx"), point.center.attr("cy")];
     let radius = document.getElementById(whichSlider).value;
     return data.filter(function(d) {
         const dataCoords = projection([d.lon, d.lat]);
@@ -149,19 +190,28 @@ function filterInCircle(data, circle) {
     });
 }
 
-function redrawPoint(circleObj, textObj, coords) {
-    circleObj.attr('cx', coords[0])
-        .attr('cy', coords[1])
+function removeA() {
+    resetPoint(pointA);
+}
+
+function removeB() {
+    resetPoint(pointB);
+}
+
+function redrawPoint(point, sliderObj) {
+    point.center.attr('cx', point.coords[0])
+        .attr('cy', point.coords[1])
         .style('visibility', 'visible');
-    textObj.attr('x', coords[0])
-        .attr('y', coords[1])
+    point.text.attr('x', point.coords[0])
+        .attr('y', point.coords[1])
         .style('visibility', 'visible');
-    radiusA.attr('r', sliderA.value)
-        .attr('cx', coordsA[0])
-        .attr('cy', coordsA[1])
+    point.radius.attr('r', sliderObj.value)
+        .attr('cx', point.coords[0])
+        .attr('cy', point.coords[1])
         .style('visibility', 'visible');
 
 }
+
 
 function drawTreeScatterPlot(treeData) {
     // Create a selection of circles in our plot (empty on the first go)
@@ -206,6 +256,8 @@ function drawTreeScatterPlot(treeData) {
     let unselectedCircles = updatedCircles.exit();
     // And we'll remove those nodes form the DOM - poof!
     updatedCircles.exit().remove();
+
+   
 }
 
 function distance(A, B) {

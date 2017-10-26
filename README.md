@@ -16,3 +16,4 @@ Usability/design tweaks:
 
 
 Matt :  circle filtering
+Karen: draggable circle radius
