@@ -12,19 +12,21 @@
     <div class="row">
       <div class="column">
         <svg id="map-viz">
-          <circle id="circleA"></circle>
-          <circle id="radiusA"></circle>
-          <text id="textA">A</text>
+          <!--<circle id="pointA"></circle>-->
+          <!--<circle id="radiusA"></circle>-->
+          <!--<text id="textA">A</text>-->
         </svg>
       </div>
       <div class="column">
         <div class="row">
           <label for="sliderA">Radius A</label>
-          <input type="range" min="1" max="1000" value="50" class="slider" id="sliderA">
+          <button id="removeA" onclick="removeA()">Remove A</button>
+          <input type="range" min="1" max="800" value="50" class="slider" id="sliderA">
         </div>
         <div class="row">
-          <label for="radiusB">Radius B</label>
-          <input type="range" min="1" max="100" value="50" class="slider" id="radiusB">
+          <label for="sliderB">Radius B</label>
+          <button id="removeB" onclick="removeB()">Remove B</button>
+          <input type="range" min="1" max="800" value="50" class="slider" id="sliderB">
         </div>
         <div class="row">
           <label for="treeDiam">Only include trees with diameter greater than

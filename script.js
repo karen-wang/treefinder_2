@@ -17,7 +17,7 @@ let projection = d3.geoMercator()
 // Select the `<svg id="animal-viz"></svg>` DOM node
 let wholeChart = d3.select('#map-viz');
 
-console.log('wee');
+//console.log('wee');
 
 let plotMargin = 50;
 
@@ -43,44 +43,8 @@ let plot = wholeChart.append('g')
 // [KYW] I filtered out all rows with no latitude or longitude in Excel
 d3.csv('trees_filter_latlong.csv', parseInputRow, loadTreeData);
 
-var circleA = d3.select('#circleA')
-    .attr('r', 3)
-    .attr('cx', 0)
-    .attr('cy', 0)
-    .style('fill', 'black')
-    .style('visibility', 'hidden');
-
-var radiusA = d3.select('#radiusA')
-    .attr('r', 0)
-    .attr('cx', 0)
-    .attr('cy', 0)
-    .style('fill', 'black')
-    .style('opacity', 0.1)
-    .style('visibility', 'hidden');
-
-var textA = d3.select('#textA')
-    .attr('x', 0)
-    .attr('y', 0)
-    .attr('text-anchor', 'start')
-    .style('fill', 'red')
-    .style('font-family', 'sans-serif')
-    .style('visibility', 'hidden');
-
-var coordsA = null;
-
-var sliderA = document.getElementById('sliderA');
-sliderA.addEventListener("input", function() {
-    let newRadius = this.value;
-    if (coordsA) {
-        radiusA.attr('r', newRadius)
-            .attr('cx', coordsA[0])
-            .attr('cy', coordsA[1])
-            .style('visibility', 'visible');
-    }
-}, false);
-
-let circle = d3.geoCircle();
-circle.center([-138.2836697, 47.26998737]).radius();
+// let circle = d3.geoCircle();
+// circle.center([-138.2836697, 47.26998737]).radius();
 
 // Convert weight and height from strings to numbers
 function parseInputRow(d) {
@@ -97,8 +61,8 @@ function multifilterData(treeData) {
     const minDiameter = document.getElementById('diameter-slider').value;
     const speciesQuery = document.getElementById('species').value;
     return treeData
-    .filter(d => d.diameter > minDiameter)
-    .filter(d => d.species.includes(speciesQuery));
+            .filter(d => d.diameter > minDiameter)
+.filter(d => d.species.includes(speciesQuery));
 }
 
 function loadTreeData(error, treeData) {
@@ -119,27 +83,94 @@ function loadTreeData(error, treeData) {
         drawTreeScatterPlot(filteredData);
     });
 
-    let wholeChart = d3.select('#map-viz');
-    wholeChart.on("click", function() {
-        //console.log(d3.mouse(this));
-        coordsA = d3.mouse(this);
-        redrawPoint(circleA, textA, coordsA);
-    });
-
 }
 
-function redrawPoint(circleObj, textObj, coords) {
-    circleObj.attr('cx', coords[0])
-        .attr('cy', coords[1])
+// var pointA;
+// var radiusA;
+// var textA;
+// var coordsA;
+//
+// var pointB;
+// var radiusB;
+// var textB;
+// var coordsB;
+
+var pointA;
+var pointB;
+
+wholeChart.on("click", function() {
+    if (pointA.coords == null) {
+        pointA.coords = d3.mouse(this);
+        redrawPoint(pointA, sliderA);
+    } else if (pointB.coords == null) {
+        pointB.coords = d3.mouse(this);
+        redrawPoint(pointB, sliderB);
+    }
+});
+
+var sliderA = document.getElementById('sliderA');
+sliderA.addEventListener("input", function() {
+    if (pointA) {
+        let newRadius = this.value;
+        pointA.radius.attr('r', newRadius)
+            .attr('cx', pointA.coords[0])
+            .attr('cy', pointA.coords[1]);
+    }
+}, false);
+
+var sliderB = document.getElementById('sliderB');
+sliderB.addEventListener("input", function() {
+    if (pointB) {
+        let newRadius = this.value;
+        pointB.radius.attr('r', newRadius)
+            .attr('cx', pointB.coords[0])
+            .attr('cy', pointB.coords[1]);
+    }
+}, false);
+
+function resetPoint(point) {
+    point.coords = null;
+    point.center.attr('r', 3)
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .style('fill', 'black')
+        .style('visibility', 'hidden');
+    point.radius.attr('r', 0)
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .style('fill', 'black')
+        .style('opacity', 0.1)
+        .style('visibility', 'hidden');
+    point.text.attr('x', 0)
+        .attr('y', 0)
+        .attr('text-anchor', 'start')
+        .text(point.id)
+        .style('fill', 'red')
+        .style('font-family', 'sans-serif')
+        .style('visibility', 'hidden');
+}
+
+function removeA() {
+    resetPoint(pointA);
+}
+
+function removeB() {
+    resetPoint(pointB);
+}
+
+function redrawPoint(point, sliderObj) {
+    point.center.attr('cx', point.coords[0])
+        .attr('cy', point.coords[1])
         .style('visibility', 'visible');
-    textObj.attr('x', coords[0])
-        .attr('y', coords[1])
+    point.text.attr('x', point.coords[0])
+        .attr('y', point.coords[1])
         .style('visibility', 'visible');
-    radiusA.attr('r', sliderA.value)
-        .attr('cx', coordsA[0])
-        .attr('cy', coordsA[1])
+    point.radius.attr('r', sliderObj.value)
+        .attr('cx', point.coords[0])
+        .attr('cy', point.coords[1])
         .style('visibility', 'visible');
 }
+
 
 function drawTreeScatterPlot(treeData) {
     console.log('drawTreeScatterPlot');
@@ -185,6 +216,20 @@ function drawTreeScatterPlot(treeData) {
     let unselectedCircles = updatedCircles.exit();
     // And we'll remove those nodes form the DOM - poof!
     updatedCircles.exit().remove();
+
+    pointA = {};
+    pointA.id = 'A';
+    pointA.center = wholeChart.append('circle');
+    pointA.radius = wholeChart.append('circle');
+    pointA.text = wholeChart.append('text');
+    resetPoint(pointA);
+
+    pointB = {};
+    pointB.id = 'B';
+    pointB.center = wholeChart.append('circle');
+    pointB.radius = wholeChart.append('circle');
+    pointB.text = wholeChart.append('text');
+    resetPoint(pointB);
 }
 
 function filterDiameter() {
