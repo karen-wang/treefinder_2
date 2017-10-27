@@ -5,7 +5,7 @@ Usability/design tweaks:
 - turn off/on the tree diameter filter
 - use google material classes for sliders
 - display total number of trees in selection 
-- turn off A and B radii if you only want a single circle
+x turn off A and B radii if you only want a single circle
 - display the parameters of the query string in natural language
 - hovering for trees that you mouse over
 - change species search to not be substring but start of word
@@ -17,3 +17,5 @@ Usability/design tweaks:
 
 Matt :  circle filtering
 Karen: draggable circle radius
+
+Karen - draggable radii

@@ -112,9 +112,9 @@ var sliderA = document.getElementById('sliderA');
 sliderA.addEventListener("input", function() {
     if (pointA) {
         let newRadius = this.value;
-        pointA.radius.attr('r', newRadius)
-            .attr('cx', pointA.coords[0])
-            .attr('cy', pointA.coords[1]);
+        pointA.radius.attr('r', newRadius);
+            // .attr('cx', pointA.coords[0])
+            // .attr('cy', pointA.coords[1]);
     }
 }, false);
 
@@ -122,9 +122,9 @@ var sliderB = document.getElementById('sliderB');
 sliderB.addEventListener("input", function() {
     if (pointB) {
         let newRadius = this.value;
-        pointB.radius.attr('r', newRadius)
-            .attr('cx', pointB.coords[0])
-            .attr('cy', pointB.coords[1]);
+        pointB.radius.attr('r', newRadius);
+            // .attr('cx', pointB.coords[0])
+            // .attr('cy', pointB.coords[1]);
     }
 }, false);
 
@@ -207,9 +207,7 @@ function drawTreeScatterPlot(treeData) {
             let projectedLoc = projection([d.lon, d.lat]);
             return projectedLoc[1];
         })
-        .style('fill', function (d) {
-            return 'green';
-        });
+        .style('fill', 'green');
 
     // Now we'll select all the circles that no longer
     // have any corresponding data after the data join
@@ -230,6 +228,18 @@ function drawTreeScatterPlot(treeData) {
     pointB.radius = wholeChart.append('circle');
     pointB.text = wholeChart.append('text');
     resetPoint(pointB);
+}
+
+function mouseover() {
+    console.log('mouseover');
+    console.log(d3.event);
+    let target = d3.event.target;
+    target.attr('fill', 'yellow');
+}
+
+function mouseout() {
+    console.log('mouseout');
+    console.log(d3.event);
 }
 
 function filterDiameter() {
