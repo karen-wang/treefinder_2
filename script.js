@@ -149,7 +149,7 @@ function loadTreeData(error, treeData) {
 
     var dragA = d3.drag()
         .on('drag', function () {
-            console.log('drag A');
+            //console.log('drag A');
             if (pointA) {
                 pointA.center.attr('cx', d3.event.x)
                     .attr('cy', d3.event.y);
@@ -164,7 +164,7 @@ function loadTreeData(error, treeData) {
 
     var dragB = d3.drag()
         .on('drag', function () {
-            console.log('drag B');
+            //console.log('drag B');
             if (pointB) {
                 pointB.center.attr('cx', d3.event.x)
                     .attr('cy', d3.event.y);
@@ -179,12 +179,14 @@ function loadTreeData(error, treeData) {
 
     pointA = {};
     pointA.id = 'A';
-    pointA.center = wholeChart.append('circle')
-        .call(dragA);
+    pointA.center = wholeChart.append('circle');
     pointA.radius = wholeChart.append('circle')
         .call(resizeA);
     pointA.text = wholeChart.append('text')
-        .call(dragA);
+        .attr('id', 'textA')
+        .call(dragA)
+        .on('mouseover', mouseoverTextA)
+        .on('mouseout', mouseoutTextA);
     resetPoint(pointA);
 
     pointB = {};
@@ -194,8 +196,31 @@ function loadTreeData(error, treeData) {
     pointB.radius = wholeChart.append('circle')
         .call(resizeB);
     pointB.text = wholeChart.append('text')
-        .call(dragB);
+        .attr('id', 'textB')
+        .call(dragB)
+        .on('mouseover', mouseoverTextB)
+        .on('mouseout', mouseoutTextB);
     resetPoint(pointB);
+}
+
+function mouseoverTextA() {
+    //console.log('mouseover');
+    d3.select(this).style('fill', 'orange');
+    document.getElementById("textA").style.cursor = "pointer";
+}
+
+function mouseoutTextA() {
+    d3.select(this).style('fill', 'red');
+}
+
+
+function mouseoverTextB() {
+    d3.select(this).style('fill', 'orange');
+    document.getElementById("textB").style.cursor = "pointer";
+}
+
+function mouseoutTextB() {
+    d3.select(this).style('fill', 'red');
 }
 
 var pointA;
@@ -338,20 +363,6 @@ function drawTreeScatterPlot(treeData) {
 
 function distance(A, B) {
     return Math.sqrt(Math.pow(A[0]- B[0], 2) + Math.pow(A[1] - B[1], 2));
-}
-
-
-
-function mouseover() {
-    console.log('mouseover');
-    console.log(d3.event);
-    let target = d3.event.target;
-    target.attr('fill', 'yellow');
-}
-
-function mouseout() {
-    console.log('mouseout');
-    console.log(d3.event);
 }
 
 function filterDiameter() {
