@@ -17,3 +17,12 @@ Usability/design tweaks:
 
 Matt :  circle filtering
 Karen: draggable circle radius
+
+
+
+- all one circle cases (before placing for first time, after removing)
+- prettify settings, header, etc.
+
+- if no circles drawn, don't filter by circles
+- if one circle drawn, filter by one
+- if two circles drawn, filter by both
