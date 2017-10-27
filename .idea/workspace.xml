@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b4e35a06-864c-48b9-bae4-4a3af6d2289b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script.js" afterPath="$PROJECT_DIR$/script.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -39,10 +37,26 @@
       <file leaf-file-name="script.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="250" column="38" lean-forward="false" selection-start-line="250" selection-start-column="38" selection-end-line="250" selection-end-column="38" />
+            <state relative-caret-position="256">
+              <caret line="252" column="38" lean-forward="false" selection-start-line="252" selection-start-column="38" selection-end-line="252" selection-end-column="38" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1509134258000" expanded="true" signature="3384:3480" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="8320:8785" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="8602:8781" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="8717:8753" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="8806:8833" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="8854:8881" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="8922:9327" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="9369:11491" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="9630:10302" ph="//..." />
+                <marker date="1509134258000" expanded="true" signature="10308:10748" ph="//..." />
+                <marker date="1509134258000" expanded="true" signature="10907:11054" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="11089:11195" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="11235:11340" ph="//..." />
+                <marker date="1509134258000" expanded="true" signature="11517:11594" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="11622:11827" ph="{...}" />
+                <marker date="1509134258000" expanded="true" signature="11766:11820" ph="//..." />
               </folding>
             </state>
           </provider>
@@ -58,17 +72,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="19" column="22" lean-forward="false" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+            <state relative-caret-position="342">
+              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/style.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -124,10 +138,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/script.js" />
         <option value="$PROJECT_DIR$/style.css" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -271,12 +285,12 @@
       <option name="presentableId" value="Default" />
       <updated>1508553539306</updated>
       <workItem from="1508553545779" duration="3428000" />
-      <workItem from="1508880330451" duration="17291000" />
+      <workItem from="1508880330451" duration="17353000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20719000" />
+    <option name="totallyTimeSpent" value="20781000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="22" width="1276" height="778" extended-state="0" />
@@ -336,6 +350,22 @@
           <caret line="60" column="47" lean-forward="true" selection-start-line="60" selection-start-column="47" selection-end-line="60" selection-end-column="47" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1509134258000" expanded="true" signature="3384:3480" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8320:8785" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8602:8781" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8717:8753" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8806:8833" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8854:8881" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8922:9327" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="9369:11491" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="9630:10302" ph="//..." />
+            <marker date="1509134258000" expanded="true" signature="10308:10748" ph="//..." />
+            <marker date="1509134258000" expanded="true" signature="10907:11054" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="11089:11195" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="11235:11340" ph="//..." />
+            <marker date="1509134258000" expanded="true" signature="11517:11594" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="11622:11827" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="11766:11820" ph="//..." />
           </folding>
         </state>
       </provider>
@@ -391,20 +421,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="22" lean-forward="false" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="250" column="38" lean-forward="false" selection-start-line="250" selection-start-column="38" selection-end-line="250" selection-end-column="38" />
+        <state relative-caret-position="256">
+          <caret line="252" column="38" lean-forward="false" selection-start-line="252" selection-start-column="38" selection-end-line="252" selection-end-column="38" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1509134258000" expanded="true" signature="3384:3480" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8320:8785" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8602:8781" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8717:8753" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8806:8833" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8854:8881" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="8922:9327" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="9369:11491" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="9630:10302" ph="//..." />
+            <marker date="1509134258000" expanded="true" signature="10308:10748" ph="//..." />
+            <marker date="1509134258000" expanded="true" signature="10907:11054" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="11089:11195" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="11235:11340" ph="//..." />
+            <marker date="1509134258000" expanded="true" signature="11517:11594" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="11622:11827" ph="{...}" />
+            <marker date="1509134258000" expanded="true" signature="11766:11820" ph="//..." />
           </folding>
         </state>
       </provider>
@@ -413,6 +451,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>

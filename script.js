@@ -104,6 +104,8 @@ function loadTreeData(error, treeData) {
         } else if (pointB.coords == null) {
             pointB.coords = d3.mouse(this);
             redrawPoint(pointB, sliderB);
+            let filteredData = multifilterData(treeData);
+            drawTreeScatterPlot(filteredData);
         }
     });
 
@@ -254,6 +256,11 @@ function resetPoint(point) {
 
 
 function filterInCircle(data, point) {
+    
+    if (point.coords === null) {
+        return data;
+    }
+
     let whichSlider = (point.id === 'A') ? 'sliderA' : 'sliderB';
     let circleCoords = [point.center.attr("cx"), point.center.attr("cy")];
     // let radius = document.getElementById(whichSlider).value;
