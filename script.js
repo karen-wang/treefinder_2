@@ -374,7 +374,9 @@ function drawTreeScatterPlot(treeData) {
             let projectedLoc = projection([d.lon, d.lat]);
             return projectedLoc[1];
         })
-        .style('fill', 'green');
+        .style('fill', 'green')
+        .style("fill-opacity", .8)
+        .style('stroke', 'black');
 
     // Now we'll select all the circles that no longer
     // have any corresponding data after the data join
