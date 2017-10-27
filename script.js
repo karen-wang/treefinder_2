@@ -67,6 +67,7 @@ function multifilterData(treeData) {
     .filter(d => d.species.includes(speciesQuery));
 }
 
+
 function loadTreeData(error, treeData) {
     if (error) throw error; // Runs if there's a problem fetching the csv.
 
@@ -126,35 +127,136 @@ function loadTreeData(error, treeData) {
         }
     }, false);
 
+    var resizeA = d3.drag()
+        .on('drag', function () {
+            if (pointA) {
+                pointA.radius.attr('r', function (c) {
+                        return Math.pow(Math.pow(this.attributes.cx.value - d3.event.x, 2) + Math.pow(this.attributes.cy.value - d3.event.y, 2), 0.5);
+                    });
+                let filteredData = multifilterData(treeData);
+                drawTreeScatterPlot(filteredData);
+            }
+        });
+
+    var resizeB = d3.drag()
+        .on('drag', function () {
+            if (pointB) {
+                pointB.radius.attr('r', function (c) {
+                        return Math.pow(Math.pow(this.attributes.cx.value - d3.event.x, 2) + Math.pow(this.attributes.cy.value - d3.event.y, 2), 0.5);
+                    });
+                let filteredData = multifilterData(treeData);
+                drawTreeScatterPlot(filteredData);
+            }
+        });
+
+    var dragA = d3.drag()
+        .on('drag', function () {
+            //console.log('drag A');
+            if (pointA) {
+                pointA.center.attr('cx', d3.event.x)
+                    .attr('cy', d3.event.y);
+                pointA.radius.attr('cx', d3.event.x)
+                    .attr('cy', d3.event.y);
+                pointA.text.attr('x', d3.event.x)
+                    .attr('y', d3.event.y);
+                let filteredData = multifilterData(treeData);
+                drawTreeScatterPlot(filteredData);
+            }
+        });
+
+    var dragB = d3.drag()
+        .on('drag', function () {
+            //console.log('drag B');
+            if (pointB) {
+                pointB.center.attr('cx', d3.event.x)
+                    .attr('cy', d3.event.y);
+                pointB.radius.attr('cx', d3.event.x)
+                    .attr('cy', d3.event.y);
+                pointB.text.attr('x', d3.event.x)
+                    .attr('y', d3.event.y);
+                let filteredData = multifilterData(treeData);
+                drawTreeScatterPlot(filteredData);
+            }
+        });
+
     pointA = {};
     pointA.id = 'A';
     pointA.center = wholeChart.append('circle');
-    pointA.radius = wholeChart.append('circle');
-    pointA.text = wholeChart.append('text');
+    pointA.radius = wholeChart.append('circle')
+        .call(resizeA);
+    pointA.text = wholeChart.append('text')
+        .attr('id', 'textA')
+        .call(dragA)
+        .on('mouseover', mouseoverTextA)
+        .on('mouseout', mouseoutTextA);
     resetPoint(pointA);
 
     pointB = {};
     pointB.id = 'B';
-    pointB.center = wholeChart.append('circle');
-    pointB.radius = wholeChart.append('circle');
-    pointB.text = wholeChart.append('text');
+    pointB.center = wholeChart.append('circle')
+        .call(dragB);
+    pointB.radius = wholeChart.append('circle')
+        .call(resizeB);
+    pointB.text = wholeChart.append('text')
+        .attr('id', 'textB')
+        .call(dragB)
+        .on('mouseover', mouseoverTextB)
+        .on('mouseout', mouseoutTextB);
     resetPoint(pointB);
 }
 
-// var pointA;
-// var radiusA;
-// var textA;
-// var coordsA;
-//
-// var pointB;
-// var radiusB;
-// var textB;
-// var coordsB;
+function mouseoverTextA() {
+    //console.log('mouseover');
+    d3.select(this).style('fill', 'orange');
+    document.getElementById("textA").style.cursor = "pointer";
+}
+
+function mouseoutTextA() {
+    d3.select(this).style('fill', 'red');
+}
+
+
+function mouseoverTextB() {
+    d3.select(this).style('fill', 'orange');
+    document.getElementById("textB").style.cursor = "pointer";
+}
+
+function mouseoutTextB() {
+    d3.select(this).style('fill', 'red');
+}
 
 var pointA;
 var pointB;
 
+// wholeChart.on("click", function() {
+//     if (pointA.coords == null) {
+//         pointA.coords = d3.mouse(this);
+//         redrawPoint(pointA, sliderA);
+//     } else if (pointB.coords == null) {
+//         pointB.coords = d3.mouse(this);
+//         redrawPoint(pointB, sliderB);
+//     }
+// });
 
+// var sliderA = document.getElementById('sliderA');
+// sliderA.addEventListener("input", function() {
+//     if (pointA) {
+//         let newRadius = this.value;
+//         pointA.radius.attr('r', newRadius);
+//             // .attr('cx', pointA.coords[0])
+//             // .attr('cy', pointA.coords[1]);
+//     }
+// }, false);
+//
+// var sliderB = document.getElementById('sliderB');
+// sliderB.addEventListener("input", function() {
+//     if (pointB) {
+//         let newRadius = this.value;
+//         pointB.radius.attr('r', newRadius);
+//             // .attr('cx', pointB.coords[0])
+//             // .attr('cy', pointB.coords[1]);
+//     }
+// }, false);
 
 function resetPoint(point) {
     point.coords = null;
@@ -187,7 +289,8 @@ function filterInCircle(data, point) {
 
     let whichSlider = (point.id === 'A') ? 'sliderA' : 'sliderB';
     let circleCoords = [point.center.attr("cx"), point.center.attr("cy")];
-    let radius = document.getElementById(whichSlider).value;
+    // let radius = document.getElementById(whichSlider).value;
+    let radius = point.radius.attr('r');
     return data.filter(function(d) {
         const dataCoords = projection([d.lon, d.lat]);
         if (radius >= distance(dataCoords, circleCoords)) {
@@ -254,9 +357,7 @@ function drawTreeScatterPlot(treeData) {
             let projectedLoc = projection([d.lon, d.lat]);
             return projectedLoc[1];
         })
-        .style('fill', function (d) {
-            return 'green';
-        });
+        .style('fill', 'green');
 
     // Now we'll select all the circles that no longer
     // have any corresponding data after the data join
