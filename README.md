@@ -14,7 +14,11 @@ x draggable A and B (?)
 - filter color based on different species
 - street name filtering instead of species name
 
-- final design tweaks: change header, change style of circles/radii, change style of sliders
+- final design tweaks:
+    - change header
+    - change style of circles/radii
+    - change text font
+    - change style of sliders
 
 
 Matt :  circle filtering
