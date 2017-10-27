@@ -16,6 +16,4 @@ x turn off A and B radii if you only want a single circle
 
 
 Matt :  circle filtering
-Karen: draggable circle radius
-
-Karen - draggable radii
+x draggable circle radius (Karen)

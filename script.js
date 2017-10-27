@@ -131,7 +131,6 @@ function loadTreeData(error, treeData) {
                 pointA.radius.attr('r', function (c) {
                         return Math.pow(Math.pow(this.attributes.cx.value - d3.event.x, 2) + Math.pow(this.attributes.cy.value - d3.event.y, 2), 0.5);
                     });
-
                 let filteredData = multifilterData(treeData);
                 drawTreeScatterPlot(filteredData);
             }
@@ -143,7 +142,36 @@ function loadTreeData(error, treeData) {
                 pointB.radius.attr('r', function (c) {
                         return Math.pow(Math.pow(this.attributes.cx.value - d3.event.x, 2) + Math.pow(this.attributes.cy.value - d3.event.y, 2), 0.5);
                     });
+                let filteredData = multifilterData(treeData);
+                drawTreeScatterPlot(filteredData);
+            }
+        });
 
+    var dragA = d3.drag()
+        .on('drag', function () {
+            console.log('drag A');
+            if (pointA) {
+                pointA.center.attr('cx', d3.event.x)
+                    .attr('cy', d3.event.y);
+                pointA.radius.attr('cx', d3.event.x)
+                    .attr('cy', d3.event.y);
+                pointA.text.attr('x', d3.event.x)
+                    .attr('y', d3.event.y);
+                let filteredData = multifilterData(treeData);
+                drawTreeScatterPlot(filteredData);
+            }
+        });
+
+    var dragB = d3.drag()
+        .on('drag', function () {
+            console.log('drag B');
+            if (pointB) {
+                pointB.center.attr('cx', d3.event.x)
+                    .attr('cy', d3.event.y);
+                pointB.radius.attr('cx', d3.event.x)
+                    .attr('cy', d3.event.y);
+                pointB.text.attr('x', d3.event.x)
+                    .attr('y', d3.event.y);
                 let filteredData = multifilterData(treeData);
                 drawTreeScatterPlot(filteredData);
             }
@@ -151,18 +179,22 @@ function loadTreeData(error, treeData) {
 
     pointA = {};
     pointA.id = 'A';
-    pointA.center = wholeChart.append('circle');
+    pointA.center = wholeChart.append('circle')
+        .call(dragA);
     pointA.radius = wholeChart.append('circle')
         .call(resizeA);
-    pointA.text = wholeChart.append('text');
+    pointA.text = wholeChart.append('text')
+        .call(dragA);
     resetPoint(pointA);
 
     pointB = {};
     pointB.id = 'B';
-    pointB.center = wholeChart.append('circle');
+    pointB.center = wholeChart.append('circle')
+        .call(dragB);
     pointB.radius = wholeChart.append('circle')
         .call(resizeB);
-    pointB.text = wholeChart.append('text');
+    pointB.text = wholeChart.append('text')
+        .call(dragB);
     resetPoint(pointB);
 }
 
