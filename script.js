@@ -16,8 +16,11 @@ let projection = d3.geoMercator()
 // Select the `<svg id="animal-viz"></svg>` DOM node
 let wholeChart = d3.select('#map-viz');
 
-
 let plotMargin = 0;
+
+let textColor = 'blue';
+let textHighlightColor = 'orange';
+let textFont = 'Gloria Hallelujah';
 
 // Set the size of the whole chart
 // We could have done this in CSS too,
@@ -214,6 +217,7 @@ function loadTreeData(error, treeData) {
     pointB.radius = wholeChart.append('circle')
         .call(resizeB);
     pointB.text = wholeChart.append('text')
+        .attr('class', '.text')
         .attr('id', 'textB')
         .call(dragB)
         .on('mouseover', mouseoverTextB)
@@ -223,56 +227,26 @@ function loadTreeData(error, treeData) {
 
 function mouseoverTextA() {
     //console.log('mouseover');
-    d3.select(this).style('fill', 'orange');
+    d3.select(this).style('fill', textHighlightColor);
     document.getElementById("textA").style.cursor = "pointer";
 }
 
 function mouseoutTextA() {
-    d3.select(this).style('fill', 'red');
+    d3.select(this).style('fill', textColor);
 }
 
 
 function mouseoverTextB() {
-    d3.select(this).style('fill', 'orange');
+    d3.select(this).style('fill', textHighlightColor);
     document.getElementById("textB").style.cursor = "pointer";
 }
 
 function mouseoutTextB() {
-    d3.select(this).style('fill', 'red');
+    d3.select(this).style('fill', textColor);
 }
 
 var pointA;
 var pointB;
-
-// wholeChart.on("click", function() {
-//     if (pointA.coords == null) {
-//         pointA.coords = d3.mouse(this);
-//         redrawPoint(pointA, sliderA);
-//     } else if (pointB.coords == null) {
-//         pointB.coords = d3.mouse(this);
-//         redrawPoint(pointB, sliderB);
-//     }
-// });
-
-// var sliderA = document.getElementById('sliderA');
-// sliderA.addEventListener("input", function() {
-//     if (pointA) {
-//         let newRadius = this.value;
-//         pointA.radius.attr('r', newRadius);
-//             // .attr('cx', pointA.coords[0])
-//             // .attr('cy', pointA.coords[1]);
-//     }
-// }, false);
-//
-// var sliderB = document.getElementById('sliderB');
-// sliderB.addEventListener("input", function() {
-//     if (pointB) {
-//         let newRadius = this.value;
-//         pointB.radius.attr('r', newRadius);
-//             // .attr('cx', pointB.coords[0])
-//             // .attr('cy', pointB.coords[1]);
-//     }
-// }, false);
 
 function resetPoint(point) {
     point.coords = null;
@@ -291,8 +265,8 @@ function resetPoint(point) {
         .attr('y', 0)
         .attr('text-anchor', 'start')
         .text(point.id)
-        .style('fill', 'red')
-        .style('font-family', 'sans-serif')
+        .style('fill', textColor)
+        .style('font-family', textFont)
         .style('visibility', 'hidden');
 }
 

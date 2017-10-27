@@ -7,7 +7,7 @@ Todos and Improvements
 x (Matt)	display total number of trees in selection 
 x 			turn off A and B radii if you only want a single circle
 - (Matt)	display the parameters of the query string in natural language
-- 			hovering for trees that you mouse over
+- (Karen)	hovering for trees that you mouse over
 - 			change species search to not be substring but start of word
 - 			real units for circle radius
 x 			draggable A and B (?)
@@ -18,4 +18,8 @@ x (Matt)	all one circle cases (before placing for first time, after removing)
 - (Matt) 	prettify settings, header, etc.
 - 			check dataset for erroneous points?
 
+- final design tweaks:
+    - change style of circles/radii
+    x change text font
+    - change style of sliders
 
