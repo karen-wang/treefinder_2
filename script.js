@@ -320,6 +320,15 @@ function drawTreeScatterPlot(treeData) {
     // "Conceptually, the enter selection’s placeholders are pointers to the parent element"
     let enterSelection = updatedCircles.enter();
 
+    // let tip = d3.tip()
+    //     .attr('class', 'd3-tip')
+    //     .offset([-10, 0])
+    //     .html(function(d) {
+    //         return "" + d.species;
+    //     });
+    //
+    // wholeChart.call(tip);
+
     let newCircles = enterSelection.append('circle')
         .attr('r', 3)
         .attr('cx', function (d) {
