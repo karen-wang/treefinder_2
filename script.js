@@ -65,6 +65,7 @@ function multifilterData(treeData) {
     //const circleA = d3.select('#circleA');
     const inAData = filterInCircle(treeData, pointA);
     const inABData = filterInCircle(inAData, pointB);
+    console.log(inAData.length, inABData.length)
     return inABData
     .filter(d => d.diameter > minDiameter)
     .filter(d => d.species.includes(speciesQuery));
@@ -181,6 +182,21 @@ function loadTreeData(error, treeData) {
                 drawTreeScatterPlot(filteredData);
             }
         });
+
+    const removeA = document.getElementById('removeA');
+    removeA.addEventListener('click', function() {
+        resetPoint(pointA);
+        let filteredData = multifilterData(treeData);
+        drawTreeScatterPlot(filteredData);
+    });
+
+    const removeB = document.getElementById('removeB');
+    removeB.addEventListener('click', function() {
+        resetPoint(pointB);
+        let filteredData = multifilterData(treeData);
+        
+        drawTreeScatterPlot(filteredData);
+    });
 
     pointA = {};
     pointA.id = 'A';
@@ -304,6 +320,7 @@ function drawTreeScatterPlot(treeData) {
     // Bind our animal data to the circles, using the "id" field as our key
     let updatedCircles = circles.data(treeData, d => d.id);
 
+    updateNumTreesText(updatedCircles.size());
     // Could also set the key to "name"!
     // The key for each datapoint can be anything, ideally a unique feature of each datum.
     // If we already have circles that have data joined, D3 will compare the keys
@@ -340,7 +357,9 @@ function drawTreeScatterPlot(treeData) {
             let projectedLoc = projection([d.lon, d.lat]);
             return projectedLoc[1];
         })
-        .style('fill', 'green');
+        .style('fill', 'green')
+        .style("fill-opacity", .8)
+        .style('stroke', 'black');
 
     // Now we'll select all the circles that no longer
     // have any corresponding data after the data join
@@ -349,6 +368,10 @@ function drawTreeScatterPlot(treeData) {
     updatedCircles.exit().remove();
 
    
+}
+
+function updateNumTreesText(numTrees) {
+    document.getElementById('num-trees-text').innerHTML = `${numTrees} / 9537 trees in selection`;
 }
 
 function distance(A, B) {

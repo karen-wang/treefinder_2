@@ -1,24 +1,29 @@
 # treefinder_2
 
 
-Todos and Improvements
-- (Matt)	turn off/on the tree diameter filter
-- use google material classes for sliders
-- (Matt)	display total number of trees in selection 
-x turn off A and B radii if you only want a single circle
-- (Matt)	display the parameters of the query string in natural language
-- (Karen) hovering for trees that you mouse over
-- change species search to not be substring but start of word
-- real units for circle radius
-x draggable A and B (?)
-- (Karen) filter color based on different species
-- street name filtering instead of species name
+Functionality Tweaks
+  Core
+- (Matt)	turn off/on the tree diameter filter, (or make a note here)
+x (Matt)	display total number of trees in selection 
+x 			turn off A and B radii if you only want a single circle
+- 			change species search to not be substring but start of word
+- 			real units for circle radius
+x 			draggable A and B (?)
 x (Karen)	draggable circle radius 
 x (Matt)	all one circle cases (before placing for first time, after removing)
-- (Matt) prettify settings, header, etc.
+- 			check dataset for erroneous points? numbers are weird sometime
+  
+  Extra
+- 			street name filtering instead of species name
 
-- final design tweaks:
-    - change style of circles/radii
-    x change text font
-    - change style of sliders
+Design Tweaks:
+  Core 
+- 			change style of circles/radii
+- 			change text font
+- (Matt)	change style of sliders: maybe polymer class?
+- (Matt)	Organize, center the header and slider elements
+- (Karen)	hovering for trees that you mouse over
 
+  Extra
+- 			filter color based on different species
+- (Matt)	display the parameters of the query string in natural language
