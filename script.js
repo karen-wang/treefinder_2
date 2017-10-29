@@ -1,3 +1,9 @@
+//import {MDCSlider} from '@material/slider';
+// const {MDCSlider} = require('@material/slider/dist/mdc.slider.min.js');
+// const slider = new MDCSlider(document.querySelector('.mdc-slider'));
+// slider.listen('MDCSlider:change', () => console.log(`Value changed to ${slider.value}`));
+
+
 // Set up SVG map
 // Set up size
 let mapWidth = 750;
@@ -65,7 +71,6 @@ function multifilterData(treeData) {
     //const circleA = d3.select('#circleA');
     const inAData = filterInCircle(treeData, pointA);
     const inABData = filterInCircle(inAData, pointB);
-    console.log(inAData.length, inABData.length)
     return inABData
     .filter(d => d.diameter > minDiameter)
     .filter(d => d.species.includes(speciesQuery));
