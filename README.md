@@ -9,7 +9,7 @@ x 			turn off A and B radii if you only want a single circle
 x 			draggable A and B (?)
 x (Karen)	draggable circle radius 
 x (Matt)	all one circle cases (before placing for first time, after removing)
-- 			check dataset for erroneous points? numbers are weird sometime
+x (Matt)	check dataset for erroneous points? numbers are weird sometime
 - (Matt)	make sure tree count gets updated
 
   Extra

@@ -295,13 +295,13 @@ function filterInCircle(data, point) {
     });
 }
 
-function removeA() {
-    resetPoint(pointA);
-}
+// function removeA() {
+//     resetPoint(pointA);
+// }
 
-function removeB() {
-    resetPoint(pointB);
-}
+// function removeB() {
+//     resetPoint(pointB);
+// }
 
 function redrawPoint(point, sliderObj) {
     point.center.attr('cx', point.coords[0])
@@ -325,7 +325,7 @@ function drawTreeScatterPlot(treeData) {
     // Bind our animal data to the circles, using the "id" field as our key
     let updatedCircles = circles.data(treeData, d => d.id);
 
-    updateNumTreesText(updatedCircles.size());
+    
     // Could also set the key to "name"!
     // The key for each datapoint can be anything, ideally a unique feature of each datum.
     // If we already have circles that have data joined, D3 will compare the keys
@@ -361,13 +361,20 @@ function drawTreeScatterPlot(treeData) {
     // have any corresponding data after the data join
     let unselectedCircles = updatedCircles.exit();
     // And we'll remove those nodes form the DOM - poof!
-    updatedCircles.exit().remove();
+    updatedCircles.exit().remove().call(function() {
+        updateNumTreesText(treeData.length);
+    });
+
 
    
 }
 
 function updateNumTreesText(numTrees) {
-    document.getElementById('num-trees-text').innerHTML = `${numTrees} / 9537 trees in selection`;
+    const TOTAL_TREES = 9537;
+    if (numTrees / TOTAL_TREES >= 1) {
+        numTrees = 9537;
+    }
+    document.getElementById('num-trees-text').innerHTML = `${numTrees} / ${TOTAL_TREES} trees in selection`;
 }
 
 function distance(A, B) {
