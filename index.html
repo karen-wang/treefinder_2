@@ -2,8 +2,12 @@
   <head>
     <meta charset="utf-8">
     <title>Trees</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+    <!--<link rel="stylesheet" href="style/jquery-ui.min.css">-->
+    <!--<link rel="stylesheet" href="style/jquery-ui.structure.min.css">-->
+    <!--<link rel="stylesheet" href="style/jquery-ui.theme.min.css">-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah">
+    <link rel="stylesheet" href="style/style.css">
+
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <!--<script src="d3-tip.js"></script>-->
   </head>
@@ -20,15 +24,15 @@
         <div class="row switch">
           <label for="sliderA">Radius A</label>
           <button id="removeA" >Remove A</button>
-          <input type="range" min="1" max="800" value="50" class="slider" id="sliderA">
+          <input type="range" min="1" max="800" value="0" class="slider" id="sliderA">
         </div>
         <div class="row">
           <label for="sliderB">Radius B</label>
           <button id="removeB">Remove B</button>
-          <input type="range" min="1" max="800" value="50" class="slider" id="sliderB">
+          <input type="range" min="1" max="800" value="0" class="slider" id="sliderB">
         </div>
         <div class="row">
-          <text> Filter by diameter</text>
+          <label> Filter by diameter?</label>
           <input id="diameter-checkbox" type="checkbox"></input>
           <div>
             <input type="range" disabled="true" min="0" max="150" value="0" class="slider" id="diameter-slider" >

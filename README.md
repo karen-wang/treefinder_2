@@ -20,10 +20,9 @@ x (Matt)	make sure tree count gets updated
 Design Tweaks:
   Core 
 - (Karen)	add circle border
-- (Karen)	mouse change when able to change radius
-- (Karen)	change circle font to be bigger and always visible
+x (Karen)	mouse change when able to change radius
+x (Karen)	change circle font to be bigger and always visible
 - (Matt)	Organize, center the header and slider elements
-- (Karen)	hovering for trees that you mouse over
 - (Karen)   know when to drag circles for user
 - (Karen)	Update the font, size, and copy of control panel
 -			Short description of dataset
