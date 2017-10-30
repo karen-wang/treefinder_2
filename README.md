@@ -12,7 +12,7 @@ x 			draggable A and B (?)
 x (Karen)	draggable circle radius 
 x (Matt)	all one circle cases (before placing for first time, after removing)
 - 			check dataset for erroneous points? numbers are weird sometime
-  
+
   Extra
 - 			street name filtering instead of species name
 
@@ -23,6 +23,7 @@ Design Tweaks:
 - (Matt)	change style of sliders: maybe polymer class?
 - (Matt)	Organize, center the header and slider elements
 - (Karen)	hovering for trees that you mouse over
+- (Karen)   know when to drag circles for user
 
   Extra
 - 			filter color based on different species
