@@ -3,7 +3,7 @@
 
 Functionality Tweaks
   Core
-- (Matt)	turn off/on the tree diameter filter, (or make a note here)
+x (Matt)	turn off/on the tree diameter filter, (or make a note here)
 x (Matt)	display total number of trees in selection 
 x 			turn off A and B radii if you only want a single circle
 x 			draggable A and B (?)
