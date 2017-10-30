@@ -14,3 +14,7 @@ h1 {
     display: table;
     clear: both;
 }
+
+.slider {
+	width: 200px;
+}

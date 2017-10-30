@@ -70,12 +70,18 @@ function multifilterData(treeData) {
 
     //const circleA = d3.select('#circleA');
     const inAData = filterInCircle(treeData, pointA);
-    const inABData = filterInCircle(inAData, pointB);
+    let inABData = filterInCircle(inAData, pointB);
+    
+    if (filteringByDiameter()) {
+        inABData = inABData.filter(d => d.diameter > minDiameter);
+    }
     return inABData
-    .filter(d => d.diameter > minDiameter)
     .filter(d => d.species.includes(speciesQuery));
 }
 
+function filteringByDiameter() {
+    return document.getElementById('diameter-slider').value > 0;
+}
 
 function loadTreeData(error, treeData) {
     if (error) throw error; // Runs if there's a problem fetching the csv.
@@ -370,10 +376,10 @@ function drawTreeScatterPlot(treeData) {
 }
 
 function updateNumTreesText(numTrees) {
-    const TOTAL_TREES = 9537;
-    if (numTrees / TOTAL_TREES >= 1) {
-        numTrees = 9537;
-    }
+    const TOTAL_TREES = 9761;
+    // if (numTrees / TOTAL_TREES >= 1) {
+    //     numTrees = 9537;
+    // }
     document.getElementById('num-trees-text').innerHTML = `${numTrees} / ${TOTAL_TREES} trees in selection`;
 }
 
