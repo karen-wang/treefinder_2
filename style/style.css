@@ -91,13 +91,13 @@ rect.map-background {
 }
 
 input {
-    font-family: 'Gloria Hallelujah';
+    font-family: sans-serif;
     font-size: 100%;
 }
 
 button {
-    font-family: 'Gloria Hallelujah';
-    font-size: 80%;
+    font-family: sans-serif;
+    font-size: 100%;
     margin-bottom: 5px;
     margin-left: 15px;
     position: relative;
