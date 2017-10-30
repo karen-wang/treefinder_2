@@ -1,3 +1,9 @@
+//import {MDCSlider} from '@material/slider';
+// const {MDCSlider} = require('@material/slider/dist/mdc.slider.min.js');
+// const slider = new MDCSlider(document.querySelector('.mdc-slider'));
+// slider.listen('MDCSlider:change', () => console.log(`Value changed to ${slider.value}`));
+
+
 // Set up SVG map
 // Set up size
 let mapWidth = 750;
@@ -64,13 +70,18 @@ function multifilterData(treeData) {
 
     //const circleA = d3.select('#circleA');
     const inAData = filterInCircle(treeData, pointA);
-    const inABData = filterInCircle(inAData, pointB);
-    console.log(inAData.length, inABData.length)
+    let inABData = filterInCircle(inAData, pointB);
+    
+    if (filteringByDiameter()) {
+        inABData = inABData.filter(d => d.diameter > minDiameter);
+    }
     return inABData
-    .filter(d => d.diameter > minDiameter)
     .filter(d => d.species.includes(speciesQuery));
 }
 
+function filteringByDiameter() {
+    return document.getElementById('diameter-checkbox').checked;
+}
 
 function loadTreeData(error, treeData) {
     if (error) throw error; // Runs if there's a problem fetching the csv.
@@ -130,6 +141,13 @@ function loadTreeData(error, treeData) {
             drawTreeScatterPlot(filteredData);
         }
     }, false);
+
+    var diameterCheckbox = document.getElementById('diameter-checkbox');
+    diameterCheckbox.addEventListener('click', function() {
+        toggleDiameter();
+        let filteredData = multifilterData(treeData);
+        drawTreeScatterPlot(filteredData);
+    });
 
     var resizeA = d3.drag()
         .on('drag', function () {
@@ -290,13 +308,13 @@ function filterInCircle(data, point) {
     });
 }
 
-function removeA() {
-    resetPoint(pointA);
-}
+// function removeA() {
+//     resetPoint(pointA);
+// }
 
-function removeB() {
-    resetPoint(pointB);
-}
+// function removeB() {
+//     resetPoint(pointB);
+// }
 
 function redrawPoint(point, sliderObj) {
     point.center.attr('cx', point.coords[0])
@@ -320,7 +338,7 @@ function drawTreeScatterPlot(treeData) {
     // Bind our animal data to the circles, using the "id" field as our key
     let updatedCircles = circles.data(treeData, d => d.id);
 
-    updateNumTreesText(updatedCircles.size());
+    
     // Could also set the key to "name"!
     // The key for each datapoint can be anything, ideally a unique feature of each datum.
     // If we already have circles that have data joined, D3 will compare the keys
@@ -365,13 +383,31 @@ function drawTreeScatterPlot(treeData) {
     // have any corresponding data after the data join
     let unselectedCircles = updatedCircles.exit();
     // And we'll remove those nodes form the DOM - poof!
-    updatedCircles.exit().remove();
+    updatedCircles.exit().remove().call(function() {
+        updateNumTreesText(treeData.length);
+    });
+
 
    
 }
 
+function toggleDiameter() {
+    if (document.getElementById('diameter-checkbox').checked) {
+        document.getElementById('diameter-slider').disabled = false;  
+        document.getElementById('diameter-info').style.visibility = "visible";   
+    } else {
+        document.getElementById('diameter-slider').disabled = true;
+        document.getElementById('diameter-info').style.visibility = "hidden";
+    }
+    
+}
+
 function updateNumTreesText(numTrees) {
-    document.getElementById('num-trees-text').innerHTML = `${numTrees} / 9537 trees in selection`;
+    const TOTAL_TREES = 9761;
+    // if (numTrees / TOTAL_TREES >= 1) {
+    //     numTrees = 9537;
+    // }
+    document.getElementById('num-trees-text').innerHTML = `${numTrees} / ${TOTAL_TREES} trees in selection`;
 }
 
 function distance(A, B) {

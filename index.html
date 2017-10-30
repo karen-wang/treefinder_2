@@ -14,13 +14,10 @@
     <div class="row">
       <div class="column">
         <svg id="map-viz">
-          <!--<circle id="pointA"></circle>-->
-          <!--<circle id="radiusA"></circle>-->
-          <!--<text id="textA">A</text>-->
         </svg>
       </div>
       <div class="column">
-        <div class="row">
+        <div class="row switch">
           <label for="sliderA">Radius A</label>
           <button id="removeA" >Remove A</button>
           <input type="range" min="1" max="800" value="50" class="slider" id="sliderA">
@@ -31,10 +28,17 @@
           <input type="range" min="1" max="800" value="50" class="slider" id="sliderB">
         </div>
         <div class="row">
-          <label for="treeDiam">Only include trees with diameter greater than
-            <text id="diameter-text" style="margin-right:10px">&nbsp;</text>
-          </label>
-          <input type="range" min="0" max="100" value="0" class="slider" id="diameter-slider" >
+          <text> Filter by diameter</text>
+          <input id="diameter-checkbox" type="checkbox"></input>
+          <div>
+            <input type="range" disabled="true" min="0" max="150" value="0" class="slider" id="diameter-slider" >
+          </div>
+          <div id="diameter-info" style="visibility: hidden;">
+            <label for="treeDiam">Only include trees with recorded diameter greater than
+              <text id="diameter-text" ></text> inches
+            </label>
+          </div>
+          
         </div>
         <div class="row">
           <label for="species">Species</label>
@@ -42,8 +46,23 @@
         </div>
         <div class="row">
           <text id="num-trees-text"></text>
+        </div>    
       </div>
+      
     </div>
+    <!-- <div class="mdc-slider" tabindex="0" role="slider"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+            aria-label="Select Value">
+          <div class="mdc-slider__track-container">
+            <div class="mdc-slider__track"></div>
+          </div>
+          <div class="mdc-slider__thumb-container">
+            <svg class="mdc-slider__thumb" width="21" height="21">
+              <circle cx="10.5" cy="10.5" r="7.875"></circle>
+            </svg>
+            <div class="mdc-slider__focus-ring"></div>
+          </div>
+        </div> -->
     <script src="script.js"></script>
   </body>
 </html>
