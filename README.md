@@ -10,7 +10,7 @@ x 			draggable A and B (?)
 x (Karen)	draggable circle radius 
 x (Matt)	all one circle cases (before placing for first time, after removing)
 x (Matt)	check dataset for erroneous points? numbers are weird sometime
-- (Matt)	make sure tree count gets updated
+x (Matt)	make sure tree count gets updated
 
   Extra
 - 			street name filtering instead of species name

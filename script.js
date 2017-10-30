@@ -80,7 +80,7 @@ function multifilterData(treeData) {
 }
 
 function filteringByDiameter() {
-    return document.getElementById('diameter-slider').value > 0;
+    return document.getElementById('diameter-checkbox').checked;
 }
 
 function loadTreeData(error, treeData) {
@@ -141,6 +141,13 @@ function loadTreeData(error, treeData) {
             drawTreeScatterPlot(filteredData);
         }
     }, false);
+
+    var diameterCheckbox = document.getElementById('diameter-checkbox');
+    diameterCheckbox.addEventListener('click', function() {
+        toggleDiameter();
+        let filteredData = multifilterData(treeData);
+        drawTreeScatterPlot(filteredData);
+    });
 
     var resizeA = d3.drag()
         .on('drag', function () {
@@ -373,6 +380,17 @@ function drawTreeScatterPlot(treeData) {
 
 
    
+}
+
+function toggleDiameter() {
+    if (document.getElementById('diameter-checkbox').checked) {
+        document.getElementById('diameter-slider').disabled = false;  
+        document.getElementById('diameter-info').style.visibility = "visible";   
+    } else {
+        document.getElementById('diameter-slider').disabled = true;
+        document.getElementById('diameter-info').style.visibility = "hidden";
+    }
+    
 }
 
 function updateNumTreesText(numTrees) {

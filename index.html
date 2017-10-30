@@ -27,13 +27,17 @@
           <input type="range" min="1" max="800" value="50" class="slider" id="sliderB">
         </div>
         <div class="row">
-          <input type="checkbox"></input>
-          <label for="treeDiam">Only include trees with diameter greater than
-            <text id="diameter-text" style="margin-right:10px">&nbsp;</text>
-          </label>
+          <text> Filter by diameter</text>
+          <input id="diameter-checkbox" type="checkbox"></input>
           <div>
-            <input type="range" min="0" max="150" value="0" class="slider" id="diameter-slider" >
+            <input type="range" disabled="true" min="0" max="150" value="0" class="slider" id="diameter-slider" >
           </div>
+          <div id="diameter-info" style="visibility: hidden;">
+            <label for="treeDiam">Only include trees with recorded diameter greater than
+              <text id="diameter-text" ></text> inches
+            </label>
+          </div>
+          
         </div>
         <div class="row">
           <label for="species">Species</label>
