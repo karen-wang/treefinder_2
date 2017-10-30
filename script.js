@@ -412,7 +412,7 @@ function updateNumTreesText(numTrees) {
     // if (numTrees / TOTAL_TREES >= 1) {
     //     numTrees = 9537;
     // }
-    document.getElementById('num-trees-text').innerHTML = `${numTrees} / ${TOTAL_TREES} trees in selection`;
+    document.getElementById('num-trees-text').innerHTML = `${numTrees} / ${TOTAL_TREES} total trees are currently displayed.`;
 }
 
 function distance(A, B) {
