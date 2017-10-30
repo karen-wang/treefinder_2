@@ -46,7 +46,7 @@ text.circle-text {
 
 text.circle-text-highlight {
     font-family: 'Gloria Hallelujah';
-    font-size: 30px;
+    font-size: 32px;
     fill: orange;
 }
 
@@ -66,8 +66,14 @@ circle.center {
     fill: white;
 }
 
+.disabled-slider {
+    fill: red;
+}
+
 #species {
     height: 30px;
+    width: 100%;
+    font-size: 1em;
 }
 
 #removeA {
@@ -78,12 +84,35 @@ circle.center {
     visibility: hidden;
 }
 
+#left {
+    width:50%;
+}
+
+#right {
+    width:40%;
+    float: right;
+}
+
+#diameter-info {
+    font-size: 16px;
+}
+
+#diameter-checkbox {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+#diameter-slider {
+    visibility: hidden;
+}
 
 rect.map-background {
     /*width: 100%;*/
     /*height: 100%;*/
     /*fill: black;*/
     /*fill-opacity: 0.01;*/
+    /*stroke: white;*/
+    /*stroke-width: 1px;*/
 }
 
 input[type=range] {

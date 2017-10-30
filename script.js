@@ -31,11 +31,12 @@ wholeChart
     .attr('width', mapWidth)
     .attr('height', mapHeight);
 
-wholeChart.append("rect")
-    .attr('class', 'map-background');
 
 var layer1 = wholeChart.append('g');
 var layer2 = wholeChart.append('g');
+
+layer1.append("rect")
+    .attr('class', 'map-background');
 
 // Add SVG map at correct size, assuming map is saved in a subdirectory called `data`
 layer1.append('image')
@@ -282,8 +283,12 @@ var pointA;
 var pointB;
 
 function resetPoint(point) {
-    document.getElementById('removeA').style.visibility = 'hidden';
-    document.getElementById('removeB').style.visibility = 'hidden';
+    if (point.id == 'A') {
+        document.getElementById('removeA').style.visibility = 'hidden';
+    }
+    if (point.id == 'B') {
+        document.getElementById('removeB').style.visibility = 'hidden';
+    }
     point.coords = null;
     point.center.attr('r', 3)
         .attr('cx', 0)
@@ -389,10 +394,14 @@ function drawTreeScatterPlot(treeData) {
 
 function toggleDiameter() {
     if (document.getElementById('diameter-checkbox').checked) {
-        document.getElementById('diameter-slider').disabled = false;  
+        let diamSlider = document.getElementById('diameter-slider');
+        diamSlider.disabled = false;
+        diamSlider.style.visibility = "visible";
         document.getElementById('diameter-info').style.visibility = "visible";   
     } else {
-        document.getElementById('diameter-slider').disabled = true;
+        let diamSlider = document.getElementById('diameter-slider');
+        diamSlider.disabled = true;
+        diamSlider.style.visibility = "hidden";
         document.getElementById('diameter-info').style.visibility = "hidden";
     }
     
