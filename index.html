@@ -6,6 +6,7 @@
     <!--<link rel="stylesheet" href="style/jquery-ui.structure.min.css">-->
     <!--<link rel="stylesheet" href="style/jquery-ui.theme.min.css">-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link rel="stylesheet" href="style/style.css">
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -13,7 +14,7 @@
   </head>
   <body>
     <section>
-      <h1 style="width: 100%; text-align: center">🌲 SF 🌳 Tree 🌴 Finder 🎄</h1>
+      <h1 style="width: 100%; text-align: center">SF Tree Finder</h1>
     </section>
     <div class="row">
       <div class="column" id="left">
@@ -24,12 +25,12 @@
         <div class="row switch">
           <label for="sliderA">Radius of circle A</label>
           <button id="removeA" >Remove A</button>
-          <input type="range" min="1" max="800" value="0" class="slider" id="sliderA">
+          <input type="range" disabled="true" min="1" max="800" value="0" class="slider" id="sliderA">
         </div>
         <div class="row">
           <label for="sliderB">Radius of circle B</label>
           <button id="removeB">Remove B</button>
-          <input type="range" min="1" max="800" value="0" class="slider" id="sliderB">
+          <input type="range" disabled="true" min="1" max="800" value="0" class="slider" id="sliderB">
         </div>
         <div class="row">
           <label> Filter by diameter?</label>
@@ -39,7 +40,7 @@
           </div>
           <div id="diameter-info" style="visibility: hidden;">
             <text for="treeDiam">Only include trees with recorded diameter greater than
-              <text id="diameter-text" ></text> inches
+              <div id="diameter-text"></div> inches.
             </text>
           </div>
           
@@ -47,18 +48,15 @@
         <div class="row">
           <label for="species">Filter by species: </label>
           <input type="text" id="species">
+          <div><text id="num-trees"><div id="num-trees-text"></div> total trees are currently displayed.</text></div>
         </div>
-        <div class="row">
-          <text id="num-trees-text"></text>
-        </div>   
-        <br>
-        <div class="row">
-          <text>This interactive display shows the location of trees in San Francisco, and allows you to filter the dataset in several ways. <br>
-            You can filter the trees to be in the radius of circles A and B, by minimum diameter, and by taxonomic or common species name (e.g. Ulmus parvifolia or Chinese Elm). <br>
-            9,761 trees in San Francisco are included in this dataset. <br>
+        <div class="row" id="data-text">
+          <p>This interactive display shows the location of trees in San Francisco, and allows you to filter the dataset in several ways. You can filter the trees to be in the radius of circles A and B, by minimum diameter, and by taxonomic or common species name
+            (e.g. Ulmus parvifolia or Chinese Elm). </p>
+          <p>Enjoy! 🌲🌳🌴</p>
+            <p>9,761 trees in San Francisco are included in this dataset. <br>
             9,537 trees have recorded diameters. <br>
-            9,750 trees are located within the map's boundaries.<br>
-          </text>
+            9,750 trees are located within the map's boundaries.</p>
         </div> 
       </div>
       

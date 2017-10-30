@@ -1,14 +1,19 @@
 body {
-    background-color: #666666;
-}
-
-h1, label, text {
-    color: white;
+    background-color: #4b4b4b;
 }
 
 h1 {
-    font-size: 50px;
+    color: white;
+}
+
+label, text, p {
+    color: lightgray;
+}
+
+h1 {
+    font-size: 60px;
     font-family: 'Gloria Hallelujah';
+    margin-bottom: 0px;
 }
 
 .column {
@@ -17,12 +22,17 @@ h1 {
 }
 
 label {
-    font-family: 'Gloria Hallelujah';
-    font-size: 140%;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2em;
 }
 
 text {
     font-family: 'Gloria Hallelujah';
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+    line-height: 120%;
 }
 
 /* Clear floats after the columns */
@@ -35,6 +45,7 @@ text {
 
 .slider {
 	width: 300px;
+    cursor: not-allowed;
 }
 
 text.circle-text {
@@ -70,10 +81,6 @@ circle.center {
     fill: white;
 }
 
-.disabled-slider {
-    fill: red;
-}
-
 #species {
     height: 30px;
     width: 100%;
@@ -95,10 +102,16 @@ circle.center {
 #right {
     width:40%;
     float: right;
+    margin-top: 190px;
 }
 
 #diameter-info {
-    font-size: 16px;
+    font-size: 0.9em;
+}
+
+#diameter-text {
+    display: inline-block;
+    width: 1.1em;
 }
 
 #diameter-checkbox {
@@ -107,7 +120,20 @@ circle.center {
 }
 
 #diameter-slider {
-    visibility: hidden;
+    /*visibility: hidden;*/
+}
+
+#num-trees {
+    font-size: 0.9em;
+}
+
+#num-trees-text {
+    display: inline-block;
+    width: 5.5em;
+}
+
+#data-text {
+    margin-top: 100px;
 }
 
 rect.map-background {
@@ -144,7 +170,7 @@ input[type=range]:focus {
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 32px;
-    cursor: pointer;
+    /*cursor: pointer;*/
     box-shadow: 0.1px 0.1px 0px #000000, 0px 0px 0.1px #0d0d0d;
     background: #808080;
     border-radius: 0px;
@@ -157,7 +183,7 @@ input[type=range]::-webkit-slider-thumb {
     width: 20px;
     border-radius: 0px;
     background: #ffffff;
-    cursor: pointer;
+    /*cursor: pointer;*/
     -webkit-appearance: none;
     margin-top: 0px;
 }
@@ -167,7 +193,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 input[type=range]::-moz-range-track {
     width: 100%;
     height: 32px;
-    cursor: pointer;
+    /*cursor: pointer;*/
     box-shadow: 0.1px 0.1px 0px #000000, 0px 0px 0.1px #0d0d0d;
     background: #808080;
     border-radius: 0px;
@@ -180,12 +206,12 @@ input[type=range]::-moz-range-thumb {
     width: 20px;
     border-radius: 0px;
     background: #ffffff;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 input[type=range]::-ms-track {
     width: 100%;
     height: 32px;
-    cursor: pointer;
+    /*cursor: pointer;*/
     background: transparent;
     border-color: transparent;
     color: transparent;
@@ -208,7 +234,7 @@ input[type=range]::-ms-thumb {
     width: 20px;
     border-radius: 0px;
     background: #ffffff;
-    cursor: pointer;
+    /*cursor: pointer;*/
     height: 32px;
 }
 input[type=range]:focus::-ms-fill-lower {

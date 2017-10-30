@@ -11,8 +11,8 @@ x (Karen)	draggable circle radius
 x (Matt)	all one circle cases (before placing for first time, after removing)
 x (Matt)	check dataset for erroneous points? numbers are weird sometime
 x (Matt)	make sure tree count gets updated
-- Turn off hover for filter
-- Make checkbox bigger
+x Turn off hover for filter
+x Make checkbox bigger
 - outline for map?
 x remove buttons disappear
 

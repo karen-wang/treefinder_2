@@ -109,13 +109,20 @@ function loadTreeData(error, treeData) {
     wholeChart.on("click", function() {
         if (pointA.coords == null) {
             pointA.coords = d3.mouse(this);
+            sliderA.disabled = false;
+            sliderA.style.cursor = 'pointer';
             sliderA.value = 100;
+            let button = document.getElementById('removeA');
+           button.style.visibility = 'visible';
             redrawPoint(pointA, sliderA);
             let filteredData = multifilterData(treeData);
             drawTreeScatterPlot(filteredData);
         } else if (pointB.coords == null) {
             pointB.coords = d3.mouse(this);
+            sliderB.disabled = false;
+            sliderB.style.cursor = 'pointer';
             sliderB.value = 100;
+            document.getElementById('removeB').style.visibility = 'visible';
             redrawPoint(pointB, sliderB);
             let filteredData = multifilterData(treeData);
             drawTreeScatterPlot(filteredData);
@@ -284,10 +291,19 @@ var pointB;
 
 function resetPoint(point) {
     if (point.id == 'A') {
-        document.getElementById('removeA').style.visibility = 'hidden';
+        let removeButton = document.getElementById('removeA');
+        removeButton.style.visibility = 'hidden';
+        let slider = document.getElementById('sliderA');
+        slider.disabled = true;
+        slider.value = 0;
+        slider.style.cursor = 'not-allowed';
     }
     if (point.id == 'B') {
         document.getElementById('removeB').style.visibility = 'hidden';
+        let slider = document.getElementById('sliderB');
+        slider.disabled = true;
+        slider.value = 0;
+        slider.style.cursor = 'not-allowed';
     }
     point.coords = null;
     point.center.attr('r', 3)
@@ -327,8 +343,6 @@ function filterInCircle(data, point) {
 }
 
 function redrawPoint(point, sliderObj) {
-    document.getElementById('removeA').style.visibility = 'visible';
-    document.getElementById('removeB').style.visibility = 'visible';
     point.center.attr('cx', point.coords[0])
         .attr('cy', point.coords[1])
         .style('visibility', 'visible');
@@ -396,12 +410,14 @@ function toggleDiameter() {
     if (document.getElementById('diameter-checkbox').checked) {
         let diamSlider = document.getElementById('diameter-slider');
         diamSlider.disabled = false;
-        diamSlider.style.visibility = "visible";
+        diamSlider.style.cursor = 'pointer';
+        // diamSlider.style.visibility = "visible";
         document.getElementById('diameter-info').style.visibility = "visible";   
     } else {
         let diamSlider = document.getElementById('diameter-slider');
         diamSlider.disabled = true;
-        diamSlider.style.visibility = "hidden";
+        diamSlider.style.cursor = 'not-allowed';
+        // diamSlider.style.visibility = "hidden";
         document.getElementById('diameter-info').style.visibility = "hidden";
     }
     
@@ -412,7 +428,7 @@ function updateNumTreesText(numTrees) {
     // if (numTrees / TOTAL_TREES >= 1) {
     //     numTrees = 9537;
     // }
-    document.getElementById('num-trees-text').innerHTML = `${numTrees} / ${TOTAL_TREES} total trees are currently displayed.`;
+    document.getElementById('num-trees-text').innerHTML = `${numTrees} / ${TOTAL_TREES}`;
 }
 
 function distance(A, B) {
